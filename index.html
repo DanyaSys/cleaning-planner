@@ -1,50 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планировщик уборки</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
     <div class="container">
-        <h1>Умный планировщик уборки </h1>
+        <h1> Планировщик уборки</h1>
         
-        <div class="input-section">
-            <input type="text" id="taskInput" placeholder="Введите задачу по уборке...">
-            
-            <select id="categorySelect">
-                <option value="">Выберите категорию</option>
-                <option value="Кухня"> Кухня</option>
-                <option value="Ванная"> Ванная</option>
-                <option value="Гостиная"> Гостиная</option>
-                <option value="Спальня"> Спальня</option>
-                <option value="Общие зоны"> Общие зоны</option>
+        <div class="add-task">
+            <input type="text" id="taskInput" placeholder="Новая задача...">
+            <select id="category">
+                <option>Кухня</option>
+                <option>Ванная</option>
+                <option>Комната</option>
+                <option>Общее</option>
             </select>
-            
-            <select id="prioritySelect">
-                <option value="Средний">Приоритет</option>
-                <option value="Высокий"> Высокий</option>
-                <option value="Средний"> Средний</option>
-                <option value="Низкий"> Низкий</option>
-            </select>
-            
-            <select id="taskTypeSelect">
-                <option value="Разовая">Тип задачи</option>
-                <option value="Разовая"> Разовая</option>
-                <option value="Регулярная"> Регулярная</option>
-            </select>
-            
-            <button onclick="addTask()">Добавить задачу</button>
+            <button onclick="addTask()">Добавить</button>
         </div>
 
         <div class="filters">
-            <button onclick="filterTasks('all')">Все задачи</button>
-            <button onclick="filterTasks('active')">Активные</button>
-            <button onclick="filterTasks('completed')">Выполненные</button>
+            <button onclick="showAll()">Все</button>
+            <button onclick="showActive()">Активные</button>
+            <button onclick="showCompleted()">Выполненные</button>
         </div>
 
-        <div class="tasks-section">
-            <h2>Активные задачи</h2>
-            <ul id="activeTaskList" class="task-list"></ul>
-            
-            <h2>Выполненные задачи</h2>
-            <ul id="completedTaskList" class="task-list completed"></ul>
-        </div>
+        <ul id="taskList"></ul>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
