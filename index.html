@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Планировщик уборки с напоминаниями</title>
+    <title>Планировщик уборки с регулярными задачами</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,17 +18,18 @@
                 <option>Комната</option>
                 <option>Общее</option>
             </select>
-            
-            <!-- НОВОЕ: Настройки напоминаний -->
-            <div class="reminder-settings">
-                <label>
-                    <input type="checkbox" id="reminderToggle" onchange="toggleReminder()">
-                    Напоминание
-                </label>
-                <select id="reminderTime" class="hidden">
-                    <option value="15">За 15 мин</option>
-                    <option value="60">За 1 час</option>
-                    <option value="1440">За 1 день</option>
+
+            <!-- НОВОЕ: Настройки регулярности -->
+            <div class="recurrence-settings">
+                <select id="taskType" onchange="toggleRecurrence()">
+                    <option value="once"> Разовая</option>
+                    <option value="recurring"> Регулярная</option>
+                </select>
+                
+                <select id="recurrenceInterval" class="hidden">
+                    <option value="daily">Ежедневно</option>
+                    <option value="weekly">Еженедельно</option>
+                    <option value="monthly">Ежемесячно</option>
                 </select>
             </div>
 
@@ -39,7 +40,12 @@
             <button onclick="showAll()">Все</button>
             <button onclick="showActive()">Активные</button>
             <button onclick="showCompleted()">Выполненные</button>
-            <button onclick="showWithReminders()"> С напоминаниями</button>
+            <button onclick="showRecurring()"> Регулярные</button>
+        </div>
+
+        <div class="stats">
+            <span>Активные: <span id="activeCount">0</span></span>
+            <span>Регулярные: <span id="recurringCount">0</span></span>
         </div>
 
         <ul id="taskList"></ul>
