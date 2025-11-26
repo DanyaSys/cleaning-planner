@@ -1,38 +1,30 @@
 body {
-    font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #f5f5f5;
+    font-family: Arial;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 0 20px;
 }
 
 .container {
     background: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 h1 {
     text-align: center;
-    color: #333;
     margin-bottom: 20px;
 }
 
-.add-task {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.input-row {
+.add-form {
     display: flex;
     gap: 10px;
+    margin-bottom: 15px;
 }
 
 input, select, button {
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
@@ -44,36 +36,15 @@ button {
     cursor: pointer;
 }
 
-button:hover {
-    background: #45a049;
-}
-
 .filters {
     display: flex;
     gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+    margin-bottom: 15px;
 }
 
 .filters button {
     background: #666;
-}
-
-.filters button:hover {
-    background: #555;
-}
-
-.reminder-settings {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    background: #f0f8ff;
-    border-radius: 5px;
-}
-
-.hidden {
-    display: none !important;
+    padding: 6px 12px;
 }
 
 .task {
@@ -84,17 +55,15 @@ button:hover {
     margin: 5px 0;
     background: #f9f9f9;
     border-radius: 5px;
-    border-left: 4px solid #4CAF50;
+}
+
+.task.recurring {
+    border-left: 3px solid #ff9800;
 }
 
 .task.done {
     opacity: 0.6;
     text-decoration: line-through;
-}
-
-.task.with-reminder {
-    border-left-color: #ff9800;
-    background: #fffaf0;
 }
 
 .task-actions {
@@ -103,7 +72,7 @@ button:hover {
 }
 
 .task-actions button {
-    padding: 5px 10px;
+    padding: 4px 8px;
     font-size: 12px;
 }
 
@@ -111,27 +80,11 @@ button:hover {
     background: #f44336;
 }
 
-.delete:hover {
-    background: #d32f2f;
-}
-
-.reminder-badge {
+.recurring-badge {
     background: #ff9800;
     color: white;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 12px;
-    margin-left: 10px;
-}
-
-.notification {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #4CAF50;
-    color: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    z-index: 1000;
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-size: 10px;
+    margin-left: 5px;
 }

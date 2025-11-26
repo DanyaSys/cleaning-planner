@@ -3,43 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Планировщик уборки с напоминаниями</title>
+    <title>Планировщик с регулярными задачами</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1> Планировщик уборки</h1>
+        <h1> Планировщик</h1>
         
-        <div class="add-task">
-            <input type="text" id="taskInput" placeholder="Новая задача...">
+        <div class="add-form">
+            <input type="text" id="taskInput" placeholder="Задача...">
             <select id="category">
                 <option>Кухня</option>
                 <option>Ванная</option>
                 <option>Комната</option>
-                <option>Общее</option>
             </select>
             
-            <!-- НОВОЕ: Настройки напоминаний -->
-            <div class="reminder-settings">
-                <label>
-                    <input type="checkbox" id="reminderToggle" onchange="toggleReminder()">
-                    Напоминание
-                </label>
-                <select id="reminderTime" class="hidden">
-                    <option value="15">За 15 мин</option>
-                    <option value="60">За 1 час</option>
-                    <option value="1440">За 1 день</option>
-                </select>
-            </div>
-
-            <button onclick="addTask()">Добавить</button>
+            <select id="taskType">
+                <option value="once">Однократно</option>
+                <option value="recurring">Регулярно</option>
+            </select>
+            
+            <button onclick="addTask()">+</button>
         </div>
 
         <div class="filters">
             <button onclick="showAll()">Все</button>
-            <button onclick="showActive()">Активные</button>
-            <button onclick="showCompleted()">Выполненные</button>
-            <button onclick="showWithReminders()"> С напоминаниями</button>
+            <button onclick="showRecurring()"></button>
         </div>
 
         <ul id="taskList"></ul>
