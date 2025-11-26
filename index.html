@@ -3,49 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Планировщик уборки с регулярными задачами</title>
+    <title>Планировщик с регулярными задачами</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1> Планировщик уборки</h1>
+        <h1> Планировщик</h1>
         
-        <div class="add-task">
-            <input type="text" id="taskInput" placeholder="Новая задача...">
+        <div class="add-form">
+            <input type="text" id="taskInput" placeholder="Задача...">
             <select id="category">
                 <option>Кухня</option>
                 <option>Ванная</option>
                 <option>Комната</option>
-                <option>Общее</option>
             </select>
-
-            <!-- НОВОЕ: Настройки регулярности -->
-            <div class="recurrence-settings">
-                <select id="taskType" onchange="toggleRecurrence()">
-                    <option value="once"> Разовая</option>
-                    <option value="recurring"> Регулярная</option>
-                </select>
-                
-                <select id="recurrenceInterval" class="hidden">
-                    <option value="daily">Ежедневно</option>
-                    <option value="weekly">Еженедельно</option>
-                    <option value="monthly">Ежемесячно</option>
-                </select>
-            </div>
-
-            <button onclick="addTask()">Добавить</button>
+            
+            <select id="taskType">
+                <option value="once">Однократно</option>
+                <option value="recurring">Регулярно</option>
+            </select>
+            
+            <button onclick="addTask()">+</button>
         </div>
 
         <div class="filters">
             <button onclick="showAll()">Все</button>
-            <button onclick="showActive()">Активные</button>
-            <button onclick="showCompleted()">Выполненные</button>
-            <button onclick="showRecurring()"> Регулярные</button>
-        </div>
-
-        <div class="stats">
-            <span>Активные: <span id="activeCount">0</span></span>
-            <span>Регулярные: <span id="recurringCount">0</span></span>
+            <button onclick="showRecurring()"></button>
         </div>
 
         <ul id="taskList"></ul>
