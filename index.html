@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Планировщик уборки</title>
+    <title>Планировщик уборки с напоминаниями</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,6 +18,20 @@
                 <option>Комната</option>
                 <option>Общее</option>
             </select>
+            
+            <!-- НОВОЕ: Настройки напоминаний -->
+            <div class="reminder-settings">
+                <label>
+                    <input type="checkbox" id="reminderToggle" onchange="toggleReminder()">
+                    Напоминание
+                </label>
+                <select id="reminderTime" class="hidden">
+                    <option value="15">За 15 мин</option>
+                    <option value="60">За 1 час</option>
+                    <option value="1440">За 1 день</option>
+                </select>
+            </div>
+
             <button onclick="addTask()">Добавить</button>
         </div>
 
@@ -25,6 +39,7 @@
             <button onclick="showAll()">Все</button>
             <button onclick="showActive()">Активные</button>
             <button onclick="showCompleted()">Выполненные</button>
+            <button onclick="showWithReminders()"> С напоминаниями</button>
         </div>
 
         <ul id="taskList"></ul>
