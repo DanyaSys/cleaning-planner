@@ -73,7 +73,7 @@ function renderTasks() {
     if (filter === 'recurring') {
         filteredTasks = tasks.filter(t => t.type === 'recurring' && !t.done);
     }
-    
+    //комментарий)))
     list.innerHTML = filteredTasks.map(task => `
         <li class="task ${task.done ? 'done' : ''} ${task.type === 'recurring' ? 'recurring' : ''}">
             <div>
