@@ -19,14 +19,10 @@ jobs:
         
     - name: Validate CSS file
       run: |
-      echo "Checking CSS file existence..."
-      test -f style.css && echo "V style.css exists" || exit 1
+        echo "Checking CSS file existence..."
+        test -f style.css && echo "V style.css exists" || exit 1
       
     - name: Validate JavaScript file 
       run: |
-      echo "Checking JS file existence..."
-      test -f script.js && echo "V script.js exists" || exit 1
-      
-    - name: Basic syntax check
-      run: |
-        echo "All basic validations passed! "9"
+        echo "Checking JS file existence..."
+        test -f script.js && echo "V script.js exists" || exit 1
