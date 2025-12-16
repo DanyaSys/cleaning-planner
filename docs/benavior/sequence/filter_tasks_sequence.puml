@@ -1,0 +1,46 @@
+@startuml
+title Диаграмма последовательности: Отметка уборки как выполненной
+
+actor "Пользователь" as User
+participant "Интерфейс" as UI
+participant "Контроллер" as Controller
+participant "Сервис уборки" as Service
+participant "База данных" as DB
+
+User -> UI: Нажимает галочку у задачи
+activate User
+activate UI
+
+UI -> Controller: PATCH /api/cleaning-tasks/42
+activate Controller
+
+Controller -> Service: completeCleaningTask(42)
+activate Service
+
+Service -> DB: UPDATE Tasks SET status = 'completed' WHERE task_id = 42
+activate DB
+DB --> Service: успех
+deactivate DB
+
+Service -> DB: INSERT INTO Task_History (task_id, completed_at) VALUES (42, NOW())
+activate DB
+DB --> Service: записано
+deactivate DB
+
+alt Задача рекуррентная
+    Service -> DB: Создать следующую задачу уборки
+    activate DB
+    DB --> Service: новая_задача_id
+    deactivate DB
+end
+
+Service --> Controller: задача завершена
+deactivate Service
+
+Controller --> UI: HTTP 200 OK
+deactivate Controller
+
+UI --> User: Показать подтверждение
+deactivate UI
+deactivate User
+@enduml
