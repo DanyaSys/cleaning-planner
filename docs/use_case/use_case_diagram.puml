@@ -1,0 +1,59 @@
+@startuml
+left to right direction
+title Use Case Диаграмма: Умный список задач
+
+actor "Пользователь" as User
+
+rectangle "Умный список задач" {
+    usecase "Добавление новой задачи" as AddTask
+    usecase "Пометка задачи как выполненной" as CompleteTask
+    usecase "Редактирование задачи" as EditTask
+    usecase "Удаление задачи" as DeleteTask
+    usecase "Просмотр списка задач" as ViewTasks
+    usecase "Фильтрация задач по категориям" as FilterTasks
+    usecase "Автосохранение изменений" as AutoSave
+    usecase "Валидация данных" as ValidateData
+    usecase "Поиск задачи" as SearchTask
+    usecase "Сортировка задач" as SortTasks
+    
+    ' Ассоциации (связи пользователя с use cases)
+    User -- AddTask
+    User -- CompleteTask
+    User -- EditTask
+    User -- DeleteTask
+    User -- ViewTasks
+    
+    ' Include отношения
+    AddTask ..> ValidateData : <<include>>
+    EditTask ..> ValidateData : <<include>>
+    EditTask ..> AutoSave : <<include>>
+    
+    ' Extend отношения
+    ViewTasks <.. FilterTasks : <<extend>>
+    ViewTasks <.. SearchTask : <<extend>>
+    ViewTasks <.. SortTasks : <<extend>>
+}
+
+' Примечания для пояснения
+note bottom of AddTask
+  Создание новой задачи:
+  - Ввод названия
+  - Выбор приоритета
+  - Установка срока
+end note
+
+note right of ValidateData
+  Проверка данных:
+  - Обязательные поля
+  - Корректность форматов
+  - Уникальность названия
+end note
+
+note left of ViewTasks
+  Базовый просмотр:
+  - Отображение всех задач
+  - Может быть расширен
+  фильтрацией, поиском,
+  сортировкой
+end note
+@enduml
