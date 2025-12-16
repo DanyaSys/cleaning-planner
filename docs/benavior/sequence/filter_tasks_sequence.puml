@@ -1,0 +1,65 @@
+@startuml
+title Диаграмма последовательности: Фильтрация задач уборки по комнатам
+
+actor "Пользователь" as User
+participant "Интерфейс" as UI
+participant "TaskController" as Controller
+participant "CleaningService" as Service
+participant "Database" as DB
+
+User -> UI: Нажимает фильтр "Комнаты"
+activate User
+activate UI
+
+UI -> Controller: GET /api/rooms
+activate Controller
+
+Controller -> Service: getUserRooms()
+activate Service
+
+Service -> DB: SELECT DISTINCT location FROM Tasks WHERE task_type = 'cleaning' AND location IS NOT NULL
+activate DB
+DB --> Service: ["Кухня", "Ванная", "Спальня"]
+deactivate DB
+
+Service --> Controller: rooms_list
+deactivate Service
+
+Controller --> UI: HTTP 200 OK
+deactivate Controller
+
+UI -> UI: Показать список комнат как фильтры
+UI --> User: Показать фильтры с иконками комнат
+
+User -> UI: Выбирает "Кухня" для фильтрации
+UI -> Controller: GET /api/cleaning-tasks?location=Кухня
+activate Controller
+
+Controller -> Service: getCleaningTasksByLocation("Кухня")
+activate Service
+
+Service -> DB: SELECT * FROM Tasks WHERE location = 'Кухня' AND task_type = 'cleaning' AND status = 'pending'
+activate DB
+DB --> Service: список_задач
+deactivate DB
+
+Service -> Service: formatTasksForDisplay(список_задач)
+activate Service
+Service --> Service: отформатированные_задачи
+deactivate Service
+
+Service --> Controller: отфильтрованные_задачи
+deactivate Service
+
+Controller --> UI: HTTP 200 OK
+deactivate Controller
+
+UI -> UI: Очистить общий список
+UI -> UI: Отобразить только задачи для кухни
+UI -> UI: Показать заголовок "Уборка кухни"
+UI -> UI: Подсветить активный фильтр "Кухня"
+UI --> User: Отфильтрованный список уборок для кухни
+
+deactivate UI
+deactivate User
+@enduml
