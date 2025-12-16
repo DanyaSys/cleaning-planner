@@ -1,0 +1,96 @@
+@startuml
+title Диаграмма последовательности: Добавление задачи уборки
+
+actor "Пользователь" as User
+participant "Интерфейс" as UI
+participant "TaskController" as Controller
+participant "TaskService" as Service
+participant "ValidationService" as Validation
+participant "Database" as DB
+participant "NotificationService" as Notification
+
+User -> UI: Нажимает "Новая задача уборки"
+activate User
+activate UI
+
+UI -> UI: Открывает форму создания задачи
+UI --> User: Показывает форму с полями: название,\nкомната, категория, сложность, срок
+
+User -> UI: Заполняет данные уборки:\n"Помыть полы", "Кухня", "Влажная уборка", "Средняя", "сегодня 18:00"
+User -> UI: Нажимает "Создать задачу"
+UI -> Controller: POST /api/cleaning-tasks\n{title, location, category, difficulty, due_date}
+activate Controller
+
+Controller -> Validation: validateCleaningTask(task_data)
+activate Validation
+
+Validation -> Validation: проверка: название не пустое
+Validation -> Validation: проверка: комната существует
+Validation -> Validation: проверка: категория валидна
+Validation -> Validation: проверка: дата в будущем
+
+alt Данные валидны
+    Validation --> Controller: validation_success
+    deactivate Validation
+    
+    Controller -> Service: createCleaningTask(task_data)
+    activate Service
+    
+    Service -> DB: INSERT INTO Tasks\n(title, description, priority,\ndue_date, location, task_type,\nuser_id, estimated_duration)
+    activate DB
+    
+    note right of DB
+    Пример данных:
+    title: "Помыть полы"
+    location: "Кухня"
+    priority: "medium" (из difficulty)
+    due_date: "2024-01-15 18:00"
+    task_type: "cleaning"
+    estimated_duration: 30 (минут)
+    status: "pending"
+    end note
+    
+    DB --> Service: task_id = 42
+    deactivate DB
+    
+    Service -> DB: INSERT INTO Task_Categories\n(task_id, category_id)\nVALUES (42, 3)
+    activate DB
+    DB --> Service: success
+    deactivate DB
+    
+    Service -> Notification: scheduleCleaningReminder(task_id, due_date, location)
+    activate Notification
+    Notification --> Service: reminder_id = 101
+    deactivate Notification
+    
+    Service -> Service: calculateNextCleaningDate(task_id, category)
+    activate Service
+    Service --> Service: next_date = due_date + 7 дней
+    deactivate Service
+    
+    Service --> Controller: {success: true, task_id: 42,\nnext_suggested_date: next_date}
+    deactivate Service
+    
+    Controller --> UI: HTTP 201 Created\n{task_id: 42, message: "Задача уборки создана",\nsuggested_next: next_date}
+    deactivate Controller
+    
+    UI -> UI: Показать уведомление "Задача уборки создана"
+    UI -> UI: Обновить список задач уборки
+    UI -> UI: Подсветить новую задачу
+    UI --> User: Отобразить задачу в списке\nс иконкой уборки и комнаты
+    
+else Данные невалидны
+    Validation --> Controller: validation_error\n{field: "location", error: "Комната не найдена"}
+    deactivate Validation
+    
+    Controller --> UI: HTTP 400 Bad Request\n{errors: [{field: "location", message: "Выберите существующую комнату"}]}
+    deactivate Controller
+    
+    UI -> UI: Подсветить поле "Комната" красным
+    UI -> UI: Показать список доступных комнат
+    UI --> User: "Выберите комнату из списка"
+end
+
+deactivate UI
+deactivate User
+@enduml
