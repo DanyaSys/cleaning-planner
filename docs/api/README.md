@@ -17,7 +17,7 @@
 ## Examples
 ### 📁  Login user
 - `Name: Success - Login user` URL: {{base_url}}/auth/login?username=danya
-- <img width="1371" height="732" alt="image" src="https://github.com/user-attachments/assets/2de7db90-3da9-407c-958c-edff16aeebbe" />
+- <img width="1378" height="575" alt="image" src="https://github.com/user-attachments/assets/d0e2aa8b-f1f0-49cd-9370-55f23b8b50d4" />
 
 - `Error - Invalid credentials` URL: {{base_url}}/auth/login?username=daniil
 ### 📁  Get All Tasks
